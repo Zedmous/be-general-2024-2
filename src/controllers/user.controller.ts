@@ -14,8 +14,10 @@ export class UserController {
   };
 
   one = async (req: Request, res: Response) => {
-    const {id}=req.params
-    const { status, message, data } = await userServices.getOne(parseInt(id) as number);
+    const { id } = req.params;
+    const { status, message, data } = await userServices.getOne(
+      parseInt(id) as number
+    );
     return res.status(status).json({
       message,
       data,
@@ -29,8 +31,11 @@ export class UserController {
     });
   };
   update = async (req: Request, res: Response) => {
-    const {id}=req.params
-    const { status, message, data } = await userServices.update(parseInt(id) as number,req.body);
+    const { id } = req.params;
+    const { status, message, data } = await userServices.update(
+      parseInt(id) as number,
+      req.body
+    );
     return res.status(status).json({
       message,
       data,
@@ -38,17 +43,19 @@ export class UserController {
   };
 
   delete = async (req: Request, res: Response) => {
-    const {id}=req.params
-    const { status, message, data } = await userServices.delete(parseInt(id) as number);
+    const { id } = req.params;
+    const { status, message, data } = await userServices.delete(
+      parseInt(id) as number
+    );
     return res.status(status).json({
       message,
       data,
     });
   };
-  
-  login = async (req: Request, res: Response) => {
 
-    const { status, message, data } = await userServices.getByEmail(req.body);
+  login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    const { status, message, data } = await userServices.login(email, password);
     return res.status(status).json({
       message,
       data,

@@ -16,6 +16,7 @@ const roleServices = {
           },
         };
       }
+      
       return {
         message: `Registros encontrados`,
         status: 200,
@@ -146,7 +147,7 @@ const roleServices = {
     } catch (error) {
       console.log(error);
       return {
-        message: `Contact the administrator: error`,
+        message: `Contacte con el administrador`,
         status: 500,
       };
     }

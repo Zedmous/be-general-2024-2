@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validateFields } from "../middlewares";
+import { validateFields, validateToken } from "../middlewares";
 import { ServiceController } from "../controllers";
 import { ServiceValidator } from "../validators";
 const router = Router();
@@ -15,6 +15,7 @@ router.get("/:id", serviceController.one);
 
 router.post(
   "/",
+  validateToken,
   serviceValidator.validateService,
   serviceValidator.validateIfNameIsUse,
   validateFields,

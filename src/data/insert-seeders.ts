@@ -1,6 +1,14 @@
 import "dotenv/config";
 import { CategoryDB, db, RoleDB, UserDB } from "../config";
-import { categoriesSeeds, rolesSeeds, userSeeds } from "./seeders";
+
+import {
+  aSeeds,
+  bSeeds,
+  categoriesSeeds,
+  rolesSeeds,
+  userSeeds,
+} from "./seeders";
+
 const eject = async () => {
   await db
     .authenticate()
@@ -18,28 +26,40 @@ async function insertSeeders() {
   const models = {
     roles: "roles",
     users: "users",
-    categories:"categories",
+    categories: "categories",
   };
 
   //NIVEL 1
   try {
     console.log(`Insertando seeds de : ${models.roles}`);
-    const result = await RoleDB.bulkCreate(rolesSeeds, { ignoreDuplicates: true,validate: true });
+    const result = await RoleDB.bulkCreate(rolesSeeds, {
+      ignoreDuplicates: true,
+      validate: true,
+    });
     console.log(`Registros insertado exitosamente de ${models.roles}`);
   } catch (error) {
     console.error(`Error al insertar registros de ${models.roles}:`, error);
   }
   try {
     console.log(`Insertando seeds de : ${models.categories}`);
-    const result = await CategoryDB.bulkCreate(categoriesSeeds, { ignoreDuplicates: true,validate: true });
+    const result = await CategoryDB.bulkCreate(categoriesSeeds, {
+      ignoreDuplicates: true,
+      validate: true,
+    });
     console.log(`Registros insertado exitosamente de ${models.categories}`);
   } catch (error) {
-    console.error(`Error al insertar registros de ${models.categories}:`, error);
+    console.error(
+      `Error al insertar registros de ${models.categories}:`,
+      error
+    );
   }
   //NIVEL 2
   try {
     console.log(`Insertando seeds de : ${models.users}`);
-    const result = await UserDB.bulkCreate(userSeeds, { ignoreDuplicates: true,validate: true });
+    const result = await UserDB.bulkCreate(userSeeds, {
+      ignoreDuplicates: true,
+      validate: true,
+    });
     console.log(`Registros insertado exitosamente de ${models.users}`);
   } catch (error) {
     console.error(`Error al insertar registros de ${models.users}:`, error);

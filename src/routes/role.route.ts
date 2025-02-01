@@ -6,6 +6,7 @@ const router = Router();
 const roleValidator = new RoleValidator();
 const roleController = new RoleController();
 
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 /**
  * @swagger
  * /roles/report:
@@ -33,6 +34,8 @@ const roleController = new RoleController();
  *                       example: "UEsDBBQAAAAAAAAAAACkAYS4tQIAALUCAAAaAAAAeGwvX3JlbHMvd29ya2Jvb2sueG1sLnJlbHM8P3htbCB..."
  */
 router.get("/report", roleController.reportExcel);
+
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 
 /**
  * @swagger
@@ -84,6 +87,7 @@ router.get("/report", roleController.reportExcel);
  */
 router.get("/", roleController.all);
 
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 /**
  * @swagger
  * /roles/{id}:
@@ -152,6 +156,7 @@ router.get("/", roleController.all);
  */
 router.get("/:id", roleController.one);
 
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 /**
  * @swagger
  * /roles:
@@ -235,11 +240,12 @@ router.get("/:id", roleController.one);
 router.post(
   "/",
   roleValidator.validateRole,
-  roleValidator.validateIfNameIsUse,
   validateFields,
+  roleValidator.validateIfNameIsUse,
   roleController.create
 );
 
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 /**
  * @swagger
  * /roles/{id}:
@@ -343,12 +349,13 @@ router.post(
 router.put(
   "/:id",
   roleValidator.validateRole,
+  validateFields,
   roleValidator.validateIfIdExist,
   roleValidator.validateIfNameIsUse,
-  validateFields,
   roleController.update
 );
 
+/**  ESTA FORMA DE DOCUMENTAR SWAGGER NOOOOOOOOOOOOO*/
 /**
  * @swagger
  * /roles/{id}:
@@ -396,5 +403,5 @@ router.put(
  *                   type: object
  *                   example: {}
  */
-router.delete("/:id", roleController.delete); 
+router.delete("/:id",roleValidator.validateIfIdExist, roleController.delete); 
 export default router;

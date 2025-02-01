@@ -1,5 +1,7 @@
 import { UserDB } from "../config";
 import { UserInterface } from "../interfaces";
+import { createToken } from "../helpers";
+
 const userServices = {
   getAll: async () => {
     try {
@@ -30,7 +32,7 @@ const userServices = {
   },
   getOne: async (id: number) => {
     try {
-      const user = await UserDB.findOne({
+      const user:any = await UserDB.findOne({
         where: {
           id: id,
           status: true,
@@ -141,6 +143,47 @@ const userServices = {
           status: 200,
           data: {
             user,
+          },
+        };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        message: `Contact the administrator: error`,
+        status: 500,
+      };
+    }
+  },
+  login: async (email: string,password:string) => {
+    try {
+      const { data ,status } = await userServices.getByEmail(email);
+
+      if(status===200){
+        if(password===data?.user[0].password){
+          //creamos el token
+          const token = createToken(data?.user[0]);
+          //enviamos la respuesta
+          return {
+            message: `Login exitoso`,
+            status: 200,
+            data: {
+              user:data.user,
+              token
+            },
+          };
+        }else{
+          return {
+            message: `Credenciales incorrectas`,
+            status: 401,
+            data: {
+            },
+          };
+        }
+      }else{
+        return {
+          message: `Credenciales incorrectas`,
+          status: 401,
+          data: {
           },
         };
       }
