@@ -8,7 +8,7 @@ const exportExcelAtoA = async (
   data: any[],
   filename: string
 ) => {
-  //Definir un arreglo para guardar los encabezados de las columnas que contendra ele xcel
+  //Definir un arreglo para guardar los encabezados de las columnas que contendra el excel
   let data_excel: any[] = [header];
   //agregar los datos al arreglo creado anteriormente y desestructurar los datos
   data_excel.push(...data);
@@ -18,15 +18,18 @@ const exportExcelAtoA = async (
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, filename);
   let name = generateName();
+  //definimos la ruta de la carpeta donde se guardara el archivo
   const folderPath = path.join(__dirname, `../files`);
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
   // Escribir la ruta del archivo
   const filePath = path.join(__dirname, `../files/${filename}_${name}.xlsx`);
+
   XLSX.writeFile(workbook, filePath);
   try {
     await fs.promises.access(filePath);
+    //
     const report = convert64(filePath);
     return {
       message: `Reporte creado exitosamente`,

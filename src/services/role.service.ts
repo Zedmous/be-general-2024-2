@@ -152,15 +152,19 @@ const roleServices = {
       };
     }
   },
+  
   reportToExcelRoles: async () => {
     try {
+      //esta consulta es muy basica,
       const roles: any = await RoleDB.findAll();
       let report = roles.map((role: any) => role.dataValues); // Accede a dataValues de cada rol
       let mappedReport = report.map((res: any) => {
-        return [res.id, res.name]; // Mapea a un arreglo de arreglos
+        return [res.id, res.name,res.status]; // Mapea a un arreglo de arreglos
       });
+
+
       const { status, message, data } = await exportExcelAtoA(
-        ["id", "name"],
+        ["id", "name","status"],
         mappedReport,
         "datosTest"
       );//usamos el helper para pasarle los parametros 
